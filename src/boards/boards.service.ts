@@ -15,7 +15,7 @@ export class BoardsService {
     const board = this.boards.find((board) => board.id === id);
 
     if (!board) {
-      throw new NotFoundException();
+      throw new NotFoundException(`${id} 에 해당하는 게시글이 없습니다`);
     }
 
     return board;
@@ -42,6 +42,7 @@ export class BoardsService {
   }
 
   deleteBoard(id: string): void {
-    this.boards = this.boards.filter((board) => board.id !== id);
+    const foundBoard = this.getBoardById(id);
+    this.boards = this.boards.filter((board) => board.id !== foundBoard.id);
   }
 }
